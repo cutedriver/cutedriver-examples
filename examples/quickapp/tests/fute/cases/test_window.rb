@@ -1,5 +1,5 @@
 ###########################################################################
-# a test for children inside flickable.
+# a test for QML Window
 #
 # Author(s):
 #    2017, Juhapekka Piiroinen <juhapekka.piiroinen@link-motion.com>
@@ -29,7 +29,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ###########################################################################
-require "minitest/autorun"
+require "#{File.dirname(__FILE__)}/../shared/helper.rb"
 require "tdriver"
 
 class TestWindow < Minitest::Test
@@ -39,84 +39,15 @@ class TestWindow < Minitest::Test
     @sut.set_event_type(:Touch)
     @app = @sut.run(:name => 'quickapp',
                     :arguments => '-testability')
+
     minitest_verify_true(1,'MainWindow is found.') {
         @app.child('appWindow')['visible'] == 'true'
     }
   end
 
-  def test_find_flickable
-    appWindow = nil
-    flickable = nil
-
-    # find a appWindow
-    minitest_verify() { appWindow = @app.child(name: 'appWindow') }
-
-    # then find the flickable
-    flickable = nil
-    minitest_verify_true(1, "Flickable can be found from appWindow") {
-        flickable = appWindow.QQuickFlickable(objectName: "flickable")
-        flickable != nil
-    }
-
-    minitest_verify_equal("flickable", 1, "we got the right flickable") {
-        flickable.attribute("objectName")
-    }
-  end
-
-  def test_find_flickable2
-    appWindow = nil
-    flickable = nil
-
-    # find a appWindow
-    minitest_verify() { appWindow = @app.child(name: 'appWindow') }
-
-    # then find the flickable
-    flickable = nil
-    minitest_verify_true(1, "Flickable can be found from appWindow") {
-        flickable = appWindow.QQuickFlickable(objectName: "flickable2")
-        flickable != nil
-    }
-
-    minitest_verify_equal("flickable2", 1, "we got the right flickable") {
-        flickable.attribute("objectName")
-    }
-  end
-
-  def test_find_flickable_with_child
-    appWindow = nil
-    flickable = nil
-
-    # find a appWindow
-    minitest_verify() { appWindow = @app.child(name: 'appWindow') }
-
-    # then find the flickable
-    flickable = nil
-    minitest_verify_true(1, "Flickable can be found from appWindow") {
-        flickable = appWindow.child(objectName: "flickable")
-        flickable != nil
-    }
-
-    minitest_verify_equal("flickable", 1, "we got the right flickable") {
-        flickable.attribute("objectName")
-    }
-  end
-
-  def test_find_flickable2_with_child
-    appWindow = nil
-    flickable = nil
-
-    # find a appWindow
-    minitest_verify() { appWindow = @app.child(name: 'appWindow') }
-
-    # then find the flickable
-    flickable = nil
-    minitest_verify_true(1, "Flickable can be found from appWindow") {
-        flickable = appWindow.child(objectName: "flickable2")
-        flickable != nil
-    }
-
-    minitest_verify_equal("flickable2", 1, "we got the right flickable") {
-        flickable.attribute("objectName")
+  def test_window
+    minitest_verify_true(1,'MainWindow is found.') {
+        @app.child('appWindow')['visible'] == 'true'
     }
   end
 

@@ -1,5 +1,8 @@
 ###########################################################################
-# a test for QML Button
+# A test runner file for rake.
+#
+# You can execute all tests with
+#   rake test
 #
 # Author(s):
 #    2017, Juhapekka Piiroinen <juhapekka.piiroinen@link-motion.com>
@@ -29,51 +32,10 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ###########################################################################
-require "minitest/autorun"
-require "tdriver"
+require "rake/testtask"
 
-class TestWindow < Minitest::Test
-  def setup
-    # Setup cuTeDriver and settings identifiers
-    @sut = TDriver.sut('sut_qt')
-    @sut.set_event_type(:Touch)
-    @app = @sut.run(:name => 'quickapp',
-                    :arguments => '-testability')
-    minitest_verify_true(1,'MainWindow is found.') {
-        @app.child('appWindow')['visible'] == 'true'
-    }
-  end
-
-  def test_button_tap_and_signal
-    appWindow = nil
-
-    # find a appWindow
-    minitest_verify() { appWindow = @app.child(:objectName => 'appWindow') }
-
-    # then find the button
-    btn = nil
-    minitest_verify_true(1, "button can be found from appWindow") {
-        btn = appWindow.child(name: "aButton")
-        btn != nil
-    }
-
-    minitest_verify_equal("Hello World") {
-        appWindow.attribute('title').to_s
-    }
-
-    # expect signal when button is clicked
-    btn.minitest_verify_signal(1, "clicked()") {
-        btn.tap
-    }
-
-    minitest_verify_equal("clicked") {
-        appWindow.attribute('title').to_s
-    }
-  end
-
-  def teardown
-    if @app != nil
-        @app.kill
-    end
-  end
+task :default => :test
+Rake::TestTask.new do |t|
+  t.test_files = FileList['cases/**/test_*.rb']
+  t.verbose = false
 end

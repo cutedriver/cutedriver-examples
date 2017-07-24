@@ -29,10 +29,10 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ###########################################################################
-require "minitest/autorun"
+require "#{File.dirname(__FILE__)}/../shared/helper.rb"
 require "tdriver"
 
-class TestWindow < Minitest::Test
+class TestFlickable < Minitest::Test
   def setup
     # Setup cuTeDriver and settings identifiers
     @sut = TDriver.sut('sut_qt')
