@@ -1,6 +1,5 @@
-#!/usr/bin/env bash
 ###########################################################################
-# a helper file for executing functional tests
+# a test for QML Button
 #
 # Author(s):
 #    2017, Juhapekka Piiroinen <juhapekka.piiroinen@link-motion.com>
@@ -30,29 +29,51 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ###########################################################################
+require "#{File.dirname(__FILE__)}/../shared/helper.rb"
+require "tdriver"
 
-# lets make sure that qttasserver is not running
-killall qttasserver 2> /dev/null
+class TestButton < Minitest::Test
+  def setup
+    # Setup cuTeDriver and settings identifiers
+    @sut = TDriver.sut('sut_qt')
+    @sut.set_event_type(:Touch)
+    @app = @sut.run(:name => 'quickapp',
+                    :arguments => '-testability')
+    minitest_verify_true(1,'MainWindow is found.') {
+        @app.child('appWindow')['visible'] == 'true'
+    }
+  end
 
-# lets start the qttasserver from the binary path
-pushd ../../src/
-  PATH=${PWD}:$PATH qttasserver &
-popd
+  def test_button_tap_and_signal
+    appWindow = nil
 
-# lets wait for a sec for qttasserver to start
-sleep 1
+    # find a appWindow
+    minitest_verify() { appWindow = @app.child(:objectName => 'appWindow') }
 
-# lets execute the tests
-rake test
-RETVAL=$?
+    # then find the button
+    btn = nil
+    minitest_verify_true(1, "button can be found from appWindow") {
+        btn = appWindow.child(name: "aButton")
+        btn != nil
+    }
 
-# lets clean up the qttasserver from background
-killall qttasserver 2> /dev/null
+    minitest_verify_equal("Hello World") {
+        appWindow.attribute('title').to_s
+    }
 
-# lets copy the logs from /logs/testability if that path exists
-if [[ -d /logs/testability ]]; then
-  cp /logs/testability/quickapp.log ../../results/
-fi
+    # expect signal when button is clicked
+    btn.minitest_verify_signal(1, "clicked()") {
+        btn.tap
+    }
 
-# lets return the result of tests
-exit ${RETVAL}
+    minitest_verify_equal("clicked") {
+        appWindow.attribute('title').to_s
+    }
+  end
+
+  def teardown
+    if @app != nil
+        @app.kill
+    end
+  end
+end

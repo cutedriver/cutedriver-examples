@@ -1,5 +1,5 @@
 ###########################################################################
-# a test for QML Window
+# a test helper file
 #
 # Author(s):
 #    2017, Juhapekka Piiroinen <juhapekka.piiroinen@link-motion.com>
@@ -30,30 +30,14 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ###########################################################################
 require "minitest/autorun"
-require "tdriver"
+require "minitest/reporters"
 
-class TestWindow < Minitest::Test
-  def setup
-    # Setup cuTeDriver and settings identifiers
-    @sut = TDriver.sut('sut_qt')
-    @sut.set_event_type(:Touch)
-    @app = @sut.run(:name => 'quickapp',
-                    :arguments => '-testability')
+opts = { :single_file => false }
+empty = true
+results_dir = "../../results"
 
-    minitest_verify_true(1,'MainWindow is found.') {
-        @app.child('appWindow')['visible'] == 'true'
-    }
-  end
+Minitest::Reporters.use! [
+  Minitest::Reporters::ProgressReporter.new,
+  Minitest::Reporters::JUnitReporter.new(results_dir, empty, opts)
+]
 
-  def test_window
-    minitest_verify_true(1,'MainWindow is found.') {
-        @app.child('appWindow')['visible'] == 'true'
-    }
-  end
-
-  def teardown
-    if @app != nil
-        @app.kill
-    end
-  end
-end
