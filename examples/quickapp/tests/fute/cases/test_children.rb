@@ -56,9 +56,10 @@ class TestChildren < Minitest::Test
         grid.children({}).count
     }
 
-    minitest_verify_equal(52, 1, "repeater has 52 children") {
+    minitest_verify_not(1, "repeater has no children") {
         repeater.children({}).count
     }
+
   end
 
   def test_children_with_objectName_regex
@@ -72,7 +73,7 @@ class TestChildren < Minitest::Test
       grid_regex.children({}).count
     }
 
-    minitest_verify_equal(50, 1, "repeater_regex has 50 children") {
+    minitest_verify_not(1, "repeater_regex has no children") {
       repeater_regex.children({}).count
     }
   end
@@ -89,7 +90,7 @@ class TestChildren < Minitest::Test
           grid.children({}).count
       }
 
-      minitest_verify_equal(52, 1, "repeater has 52 children") {
+      minitest_verify_not(1, "repeater has no children") {
           repeater.children({}).count
       }
   end
@@ -105,7 +106,7 @@ class TestChildren < Minitest::Test
           grid_regex.children({}).count
       }
 
-      minitest_verify_equal(50, 1, "repeater_regex has 50 children") {
+      minitest_verify_not(1, "repeater_regex has no children") {
           repeater_regex.children({}).count
       }
   end
@@ -117,7 +118,7 @@ class TestChildren < Minitest::Test
     minitest_verify() { grid = @app.child(name: 'grid') }
 
     minitest_verify_equal(10, 1, "10 children can be found using ruby regex /^Rect_1\d+$/)") {
-        grid.children(name: /^Rect_1\d+$/).count.to_i
+        grid.children(name: /^Rect_1\d+$/).count
     }
   end
 
@@ -128,7 +129,7 @@ class TestChildren < Minitest::Test
     minitest_verify() { grid = @app.child(name: 'grid') }
 
     minitest_verify_equal(2, 1, "2 duplicate objects can be found using 'Rect_duplicate'") {
-        grid.children(name: "Rect_duplicate").count.to_i
+        grid.children(name: "Rect_duplicate").count
     }
   end
 
@@ -139,7 +140,7 @@ class TestChildren < Minitest::Test
     minitest_verify() { grid = @app.child(name: 'grid') }
 
     minitest_verify_equal(2, 1, "2 duplicate objects can be found using regex /^Rect_duplicate$/") {
-        grid.children(name: /^Rect_duplicate$/).count.to_i
+        grid.children(name: /^Rect_duplicate$/).count
     }
   end
 
@@ -150,7 +151,7 @@ class TestChildren < Minitest::Test
     minitest_verify() { grid2 = @app.child(name: 'grid2') }
 
     minitest_verify_equal(2, 1, "2 duplicate objects can be found using regex 'Rect2_duplicate'") {
-        grid2.children(name: 'Rect2_duplicate').count.to_i
+        grid2.children(name: 'Rect2_duplicate').count
     }
   end
 
@@ -161,7 +162,7 @@ class TestChildren < Minitest::Test
     minitest_verify() { grid2 = @app.child(name: 'grid2') }
 
     minitest_verify_equal(2, 1, "2 duplicate objects can be found using regex /^Rect2_duplicate$/") {
-        grid2.children(name: /^Rect2_duplicate$/).count.to_i
+        grid2.children(name: /^Rect2_duplicate$/).count
     }
   end
 
@@ -175,7 +176,7 @@ class TestChildren < Minitest::Test
     minitest_verify() { grid = @app.child(objectName: 'grid') }
 
     minitest_verify_equal(2, 1, "2 duplicate objects can be found using 'Rect_duplicate'") {
-        grid.children(objectName: "Rect_duplicate").count.to_i
+        grid.children(objectName: "Rect_duplicate").count
     }
   end
 
@@ -186,7 +187,7 @@ class TestChildren < Minitest::Test
     minitest_verify() { grid = @app.child(objectName: 'grid') }
 
     minitest_verify_equal(2, 1, "2 duplicate objects can be found using regex /^Rect_duplicate$/") {
-        grid.children(objectName: /^Rect_duplicate$/).count.to_i
+        grid.children(objectName: /^Rect_duplicate$/).count
     }
   end
 
@@ -197,7 +198,7 @@ class TestChildren < Minitest::Test
     minitest_verify() { grid2 = @app.child(objectName: 'grid2') }
 
     minitest_verify_equal(2, 1, "2 duplicate objects can be found using regex 'Rect2_duplicate'") {
-        grid2.children(objectName: 'Rect2_duplicate').count.to_i
+        grid2.children(objectName: 'Rect2_duplicate').count
     }
   end
 
@@ -208,11 +209,9 @@ class TestChildren < Minitest::Test
     minitest_verify() { grid2 = @app.child(objectName: 'grid2') }
 
     minitest_verify_equal(2, 1, "2 duplicate objects can be found using regex /^Rect2_duplicate$/") {
-        grid2.children(objectName: /^Rect2_duplicate$/).count.to_i
+        grid2.children(objectName: /^Rect2_duplicate$/).count
     }
   end
-
-
 
   def teardown
     if @app != nil
