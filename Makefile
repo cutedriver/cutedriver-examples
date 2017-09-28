@@ -41,9 +41,18 @@ quickapp:
 quickapp-deps:
 	sudo apt install qml-module-qtquick-dialogs qml-module-qtquick-controls
 
-check:
+check: quickapp
 	set -e; \
 	source $(RVM_HOME)/.rvm/scripts/rvm;\
+	cd examples/quickapp;\
+	make check
+
+check-alt: quickapp
+	set -e; \
+	source $(RVM_HOME)/.rvm/scripts/rvm;\
+	export QTTASSERVER_HOST_BINDING="localhost";\
+	export QTTASSERVER_HOST_PORT=45535;\
+	export QTTASSERVER_SUT="sut_qt_custom_port";\
 	cd examples/quickapp;\
 	make check
 
