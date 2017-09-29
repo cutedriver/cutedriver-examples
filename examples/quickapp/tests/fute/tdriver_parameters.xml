@@ -8,6 +8,11 @@
 		<!-- use default values -->
 	</sut>
 
+	<sut id="sut_qt_custom_port" template="qt">
+		<parameter name="qttas_server_ip" value="127.0.0.1" />
+		<parameter name="qttas_server_port" value="45535" />
+	</sut>
+
 
   <!-- Add SUT configurations here. If Sut has specific configurations add them to config ini -->
 	<!-- Use Sut id as section for configuration -->

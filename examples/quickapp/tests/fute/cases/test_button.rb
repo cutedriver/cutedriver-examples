@@ -35,7 +35,7 @@ require "tdriver"
 class TestButton < Minitest::Test
   def setup
     # Setup cuTeDriver and settings identifiers
-    @sut = TDriver.sut('sut_qt')
+    @sut = TDriver.sut(ENV['QTTASSERVER_SUT'] || 'sut_qt')
     @sut.set_event_type(:Touch)
     @app = @sut.run(:name => 'quickapp',
                     :arguments => '-testability')
