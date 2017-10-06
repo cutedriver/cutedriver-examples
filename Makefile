@@ -47,6 +47,15 @@ check: quickapp
 	cd examples/quickapp;\
 	make check
 
+quickapp-huge:
+	cd examples/quickapp-huge && qmake -r && make -j$(CORES)
+
+check-huge: quickapp-huge
+	set -e; \
+        source $(RVM_HOME)/.rvm/scripts/rvm;\
+        cd examples/quickapp-huge;\
+        make check
+
 check-alt: quickapp
 	set -e; \
 	source $(RVM_HOME)/.rvm/scripts/rvm;\
