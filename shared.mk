@@ -2,8 +2,10 @@
 # This is a helper Makefile for building and running CuteDriver
 #
 # Author(s):
+#    2019, Juhapekka Piiroinen <juhapekka.piiroinen@1337.fi>
 #    2017, Juhapekka Piiroinen <juhapekka.piiroinen@link-motion.com>
 #
+# Copyright (c) 2019, Juhapekka Piiroinen
 # Copyright (c) 2017, Link Motion Oy
 # All rights reserved.
 #
@@ -30,7 +32,7 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ###########################################################################
 SHELL:=/bin/bash
-REPO_URI:=https://github.com/nomovok-opensource
+REPO_URI:=https://github.com/cutedriver
 SOURCE_ROOT:=src_tmp
 CORES:=$(shell cat /proc/cpuinfo |grep processor |wc -l)
 
