@@ -1,5 +1,7 @@
-# CuteDriver examples
-This repository contains helper Makefile for building, installing and testing the cutedriver project for ubuntu.
+[![alt travis-ci](https://travis-ci.org/cutedriver/cutedriver-examples.svg?branch=master)](https://travis-ci.org/cutedriver/cutedriver-examples)
+
+# cuTeDriver examples
+This repository contains helper Makefile for building, installing and testing the cuTeDriver project for ubuntu.
 
 ## Usage
  - *make deps* will install app dependencies.
@@ -14,4 +16,4 @@ This repository contains helper Makefile for building, installing and testing th
 
 ## Examples
 ### QuickApp
-This application is a simple QML Window based application with few components in it. The project contains cutedriver tests.
+This application is a simple QML Window based application with few components in it. The project contains cuTeDriver tests.
